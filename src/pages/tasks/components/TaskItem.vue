@@ -48,7 +48,7 @@
       data-bs-target="#modalEditTask"
       @click="getTaskById(task.id)"
     >
-      <PencilLine size="20" />
+      <PencilLine :size="20" />
       <span class="animated-label">Editar</span>
     </button>
     <button
@@ -56,18 +56,19 @@
       class="btn btn-danger d-flex align-items-center gap-1 rounded-4"
       @click="removeTask"
     >
-      <X size="20" />
+      <X :size="20" />
       <span class="animated-label">Eliminar</span>
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import dayjs from "@/lib/dayjs";
-import { useTasksStore } from "@/store/tasks";
-import { TasksStatus } from "@/types/task";
+import { ref } from "vue";
+import dayjs from "../../../lib/dayjs";
+import { useTasksStore } from "../../../store/tasks";
+import { TasksStatus } from "../../../types/task";
 import { PencilLine, X } from "lucide-vue-next";
+import { type Task } from "../../../types/task";
 
 const props = defineProps<{ task: Task; tab: string }>();
 

@@ -78,7 +78,9 @@ export const useTasksStore = defineStore("tasks", {
       this.metaTasks = data.meta;
       this.verifyPagination(data);
     },
-    async addTask(task: Task): Promise<boolean | HttpException> {
+    async addTask(
+      task: Omit<Task, "id" | "status">
+    ): Promise<boolean | HttpException> {
       let result: boolean | HttpException;
       try {
         this.loadingCreatingTask = true;
@@ -96,7 +98,7 @@ export const useTasksStore = defineStore("tasks", {
       }
       return result;
     },
-    async updateTask({ id, ...task }: Task) {
+    async updateTask(id: string, task: Partial<Task>) {
       let result: boolean | HttpException;
       let taskIndex = this.tasks.findIndex((t) => t.id === id);
       let lastTask = this.tasks[taskIndex];
@@ -105,7 +107,7 @@ export const useTasksStore = defineStore("tasks", {
         const { status } = await axios.put(`/tasks/${id}`, task);
         if (status === 200) {
           // optimistic update
-          this.tasks[taskIndex] = { id: lastTask.id, ...task };
+          this.tasks[taskIndex] = { id: lastTask.id, ...task } as Task;
           result = true;
         } else {
           // rollback optimistic update

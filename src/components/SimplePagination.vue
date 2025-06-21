@@ -12,12 +12,10 @@
 </template>
 
 <script setup lang="ts">
-import { useTasksStore } from "@/store/tasks";
+import { useTasksStore } from "../store/tasks";
 const store = useTasksStore();
 
 function loadMoreTasks() {
-  store.firstPagination = true;
   store.loadMoreTasks();
-  store.firstPagination = false;
 }
 </script>

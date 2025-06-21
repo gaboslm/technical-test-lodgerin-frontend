@@ -76,7 +76,7 @@
             class="btn btn-secondary d-flex align-items-center gap-1 rounded-4"
             data-bs-dismiss="modal"
           >
-            <ArrowLeft size="20" />
+            <ArrowLeft :size="20" />
             <span class="animated-label">Cancelar</span>
           </button>
           <button
@@ -87,11 +87,11 @@
             @click="store.loadingUpdatingTask && $event.stopPropagation()"
           >
             <template v-if="!store.loadingUpdatingTask">
-              <Check size="20" />
+              <Check :size="20" />
               <span>Guardar</span>
             </template>
             <template v-else>
-              <Loader2 size="20" class="spin" />
+              <Loader2 :size="20" class="spin" />
               <span>Guardando...</span>
             </template>
           </button>
@@ -102,12 +102,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch, computed } from "vue";
-import { useTasksStore } from "@/store/tasks";
-import { type HttpException } from "@/types/http";
-import { PencilLine, ArrowLeft, Check, Loader2 } from "lucide-vue-next";
-import ServerErrors from "@/components/ServerErrors.vue";
-import dayjs from "@/lib/dayjs";
+import { ref, reactive, watch, computed } from "vue";
+import { useTasksStore } from "../../../store/tasks";
+import { type HttpException } from "../../../types/http";
+import { ArrowLeft, Check, Loader2 } from "lucide-vue-next";
+import ServerErrors from "../../../components/ServerErrors.vue";
+import dayjs from "../../../lib/dayjs";
 
 const closeModalButton = ref<HTMLButtonElement>();
 const error = ref<HttpException>({} as HttpException);
@@ -123,21 +123,23 @@ const task = computed(() => store.task);
 
 watch(task, () => {
   formData.title = task.value.title;
-  formData.description = task.value.description;
+  formData.description = task.value.description || "";
   formData.expirationDate = dayjs(task.value.expirationDate)
     .utc()
     .format("YYYY-MM-DD");
 });
 
 async function updateTask() {
-  const result = await store.updateTask({ id: store.taskId, ...formData });
+  if (!store.taskId) return;
+
+  const result = await store.updateTask(store.taskId, formData);
 
   if (typeof result === "boolean") {
     closeModalButton.value?.click();
     formData.title = "";
     formData.description = "";
-    formData.expirationDate = null;
-    error.value = [];
+    formData.expirationDate = "";
+    error.value = {} as HttpException;
   } else {
     error.value = result;
   }

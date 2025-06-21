@@ -60,8 +60,8 @@
 </template>
 
 <script setup lang="ts">
-import { useTasksStore } from "@/store/tasks";
-import { TasksStatus } from "@/types/task";
+import { useTasksStore } from "../../../store/tasks";
+import { TasksStatus } from "../../../types/task";
 const store = useTasksStore();
 
 function changeTab(value: string) {

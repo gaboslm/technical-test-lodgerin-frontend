@@ -1,4 +1,4 @@
-import "@/assets/scss/app.scss";
+import "./assets/scss/app.scss";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createPinia } from "pinia";

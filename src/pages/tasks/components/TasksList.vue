@@ -63,9 +63,9 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from "vue";
-import { useTasksStore } from "@/store/tasks";
+import { useTasksStore } from "../../../store/tasks";
 import TaskItem from "./TaskItem.vue";
-import SimplePagination from "@/components/SimplePagination.vue";
+import SimplePagination from "../../../components/SimplePagination.vue";
 const store = useTasksStore();
 const tasks = computed(() => store.tasks);
 

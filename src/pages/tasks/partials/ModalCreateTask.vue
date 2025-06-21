@@ -74,7 +74,7 @@
             class="btn btn-secondary d-flex align-items-center gap-1 rounded-4"
             data-bs-dismiss="modal"
           >
-            <ArrowLeft size="20" />
+            <ArrowLeft :size="20" />
             <span class="animated-label">Cancelar</span>
           </button>
           <button
@@ -85,11 +85,11 @@
             @click="store.loadingCreatingTask && $event.stopPropagation()"
           >
             <template v-if="!store.loadingCreatingTask">
-              <Check size="20" />
+              <Check :size="20" />
               <span>Guardar</span>
             </template>
             <template v-else>
-              <Loader2 size="20" class="spin" />
+              <Loader2 :size="20" class="spin" />
               <span>Guardando...</span>
             </template>
           </button>
@@ -101,29 +101,33 @@
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import { useTasksStore } from "@/store/tasks";
-import { type HttpException } from "@/types/http";
+import { useTasksStore } from "../../../store/tasks";
+import { type HttpException } from "../../../types/http";
 import { Check, ArrowLeft, Loader2 } from "lucide-vue-next";
-import ServerErrors from "@/components/ServerErrors.vue";
+import ServerErrors from "../../../components/ServerErrors.vue";
 
-const closeModalButton = ref<HTMLButtonElement>();
+const closeModalButton = ref<HTMLButtonElement | undefined>();
 const error = ref<HttpException>({} as HttpException);
 const store = useTasksStore();
 const formData = reactive({
   title: "",
   description: "",
-  expirationDate: null,
+  expirationDate: "",
 });
 
 async function createTask() {
-  const result = await store.addTask(formData);
+  const result = await store.addTask({
+    title: formData.title,
+    description: formData.description,
+    expirationDate: formData.expirationDate,
+  });
 
   if (typeof result === "boolean") {
     closeModalButton.value?.click();
     formData.title = "";
     formData.description = "";
-    formData.expirationDate = null;
-    error.value = [];
+    formData.expirationDate = "";
+    error.value = {} as HttpException;
   } else {
     error.value = result;
   }

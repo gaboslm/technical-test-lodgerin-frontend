@@ -17,7 +17,7 @@
               data-bs-toggle="modal"
               data-bs-target="#modalCreateTask"
             >
-              <Plus size="20" />
+              <Plus :size="20" />
               <span class="animated-label">Añadir</span>
             </button>
           </div>
@@ -38,14 +38,11 @@
 </template>
 
 <script setup lang="ts">
-import { useTasksStore } from "@/store/tasks";
 import { Plus } from "lucide-vue-next";
 import Tabs from "./Tabs.vue";
 import TasksList from "../components/TasksList.vue";
 import ModalCreateTask from "../partials/ModalCreateTask.vue";
 import ModalEditTask from "../partials/ModalEditTask.vue";
-
-const store = useTasksStore();
 </script>
 
 <style lang="scss"></style>

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="error && typeof error.message === 'array'"
+    v-if="error && typeof error.message === 'object'"
     class="small text-danger px-3 mt-3"
   >
     <ul class="list-unstyled">
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { type HttpException } from "@/types/http";
+import { type HttpException } from "../types/http";
 
 defineProps<{ error: HttpException }>();
 </script>
