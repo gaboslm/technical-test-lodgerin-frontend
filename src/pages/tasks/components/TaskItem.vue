@@ -33,8 +33,9 @@
       >
         {{ task.title }}
       </p>
-      <p v-if="tab === 'pending'" class="text-muted-blue small m-0">
-        Expira:
+      <p class="text-muted-blue small m-0">
+        <span v-if="tab === TasksStatus.PENDING">Expira:</span>
+        <span v-else-if="tab === TasksStatus.COMPLETED">Completada:</span>
         {{ dayjs(task.expirationDate).utc().format("DD MMM YYYY") }}
         ({{ humanizeDuration(task.expirationDate) }})
       </p>

@@ -5,9 +5,11 @@
       style="border-color: #cedbe8"
     >
       <li
-        @click="changeTab('pending')"
+        @click="changeTab(TasksStatus.PENDING.toLowerCase())"
         class="nav-item text-decoration-none border-bottom border-3 border-primary-dark py-3"
-        :class="{ 'border-primary': store.tab === 'pending' }"
+        :class="{
+          'border-primary': store.tab === TasksStatus.PENDING.toLowerCase(),
+        }"
       >
         <div class="position-relative">
           <span
