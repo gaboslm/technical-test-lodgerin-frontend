@@ -1,49 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import TasksPage from "./pages/tasks/index.vue";
+</script>
 
 <template>
-  <div class="layout"></div>
+  <div class="layout">
+    <TasksPage />
+  </div>
 </template>
 
-<style lang="scss">
-$primary-color: #1682f4;
-$secondary-color: #a4ccfc;
-$tertiary-color: #ccdcec;
-
-.text-primary {
-  color: $primary-color;
-}
-
-.text-secondary {
-  color: $secondary-color;
-}
-
-.text-tertiary {
-  color: $tertiary-color;
-}
-
-.border-primary {
-  border-color: $primary-color;
-}
-
-.layout {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  & header {
-    height: 64px;
-  }
-  & main {
-    height: calc(100vh - 64px);
-    overflow-y: auto;
-  }
-
-  @media (max-width: 600px) {
-    grid-template-rows: 1fr;
-    & header {
-      height: 80px;
-    }
-    & main {
-      height: calc(100vh - 80px);
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
