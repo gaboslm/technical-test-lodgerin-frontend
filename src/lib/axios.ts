@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const version = "v1";
+const version = import.meta.env.VITE_API_VERSION || "v1";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL + `/api/${version}`;
 axios.defaults.headers.common["Content-Type"] = "application/json";
